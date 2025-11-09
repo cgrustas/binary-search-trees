@@ -4,3 +4,7 @@ const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.prettyPrint();
 tree.insert(44);
 tree.prettyPrint();
+tree.deleteItem(44);
+tree.prettyPrint();
+tree.deleteItem(23);
+tree.prettyPrint();

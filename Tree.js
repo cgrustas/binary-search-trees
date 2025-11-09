@@ -93,7 +93,7 @@ export class Tree {
    * @returns {void}
    */
   insert(value) {
-    return this.#insertHelp(this.#root, value);
+    this.#root = this.#insertHelp(this.#root, value);
   }
 
   /**
@@ -101,7 +101,7 @@ export class Tree {
    * If the given value already appears in the root's subtree, insertion does not occur.
    * @param {Node} root - the node to insert the value within
    * @param {number} value - the value to insert within the node
-   * @returns {void}
+   * @returns {Node} the root node, or the new inserted node
    */
   #insertHelp(root, value) {
     if (root === null) return new Node(value);
@@ -113,5 +113,61 @@ export class Tree {
     }
 
     return root;
+  }
+
+  /**
+   * Deletes the given value from the BST.
+   * If value does not appear in the subtree, nothing occurs.
+   * @param {number} value - the value to be deleted
+   * @returns {void}
+   */
+  deleteItem(value) {
+    this.#root = this.#deleteItemHelp(this.#root, value);
+  }
+
+  /**
+   * Helper for deleteItem(). Deletes the given value from the
+   * root's subtree.
+   * @param {Node} root - the root node
+   * @param {number} value - the value to delete within the node
+   * @returns {Node} the node to connect to the parent
+   */
+  #deleteItemHelp(root, value) {
+    if (root === null) return root;
+
+    if (value < root.data) {
+      root.left = this.#deleteItemHelp(root.left, value);
+    } else if (value > root.data) {
+      root.right = this.#deleteItemHelp(root.right, value);
+    } else {
+      const hasNoChildren = !root.left && !root.right;
+      const hasOneChild =
+        (root.left && !root.right) || (!root.left && root.right);
+
+      if (hasNoChildren) {
+        return null;
+      } else if (hasOneChild) {
+        return root.left ? root.left : root.right;
+      } else {
+        const replacementNode = this.#getSuccessor(root);
+        root.data = replacementNode.data;
+        root.right = this.#deleteItemHelp(root.right, replacementNode.data);
+      }
+    }
+
+    return root;
+  }
+
+  /**
+   * Returns the in-order successor of the given root (smallest value in the right subtree)
+   * @param {Node} root - root of the BST
+   * @returns {Node} successor
+   */
+  #getSuccessor(root) {
+    let curr = root.right;
+    while (curr !== null && curr.left !== null) {
+      curr = curr.left;
+    }
+    return curr;
   }
 }
