@@ -201,7 +201,7 @@ export class Tree {
   /**
    * @callback NodeCallback
    * @param {Node} node - the current node being processed
-   * @returns {void}
+   * @returns {*}
    */
 
   /**
@@ -320,5 +320,15 @@ export class Tree {
     if (!isNodeBalanced) return null;
 
     return 1 + Math.max(leftHeight, rightHeight);
+  }
+
+  /**
+   * Re-balances this binary search tree
+   * @returns {void}
+   */
+  rebalance() {
+    const array = [];
+    this.levelOrderForEach((node) => array.push(node.data));
+    this.#root = this.#buildTree(array);
   }
 }
