@@ -12,4 +12,16 @@ export class Node {
     this.#left = left;
     this.#right = right;
   }
+
+  get data() {
+    return this.#data;
+  }
+
+  set left(left) {
+    this.#left = left;
+  }
+
+  set right(right) {
+    this.#right = right;
+  }
 }
