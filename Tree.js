@@ -77,4 +77,41 @@ export class Tree {
       );
     }
   }
+
+  /**
+   * Checks if the BST is empty
+   * @returns {boolean} true if BST is empty, false if BST contains a root node
+   */
+  #isEmpty() {
+    return !this.#root;
+  }
+
+  /**
+   * Inserts the given value into the BST
+   * If the given value already appears in the BST, insertion does not occur.
+   * @param {number} value - the number to be added
+   * @returns {void}
+   */
+  insert(value) {
+    return this.#insertHelp(this.#root, value);
+  }
+
+  /**
+   * Helper for insert(). Inserts the given value into the given node.
+   * If the given value already appears in the root's subtree, insertion does not occur.
+   * @param {Node} root - the node to insert the value within
+   * @param {number} value - the value to insert within the node
+   * @returns {void}
+   */
+  #insertHelp(root, value) {
+    if (root === null) return new Node(value);
+
+    if (value < root.data) {
+      root.left = this.#insertHelp(root.left, value);
+    } else if (value > root.data) {
+      root.right = this.#insertHelp(root.right, value);
+    }
+
+    return root;
+  }
 }
