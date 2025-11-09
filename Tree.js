@@ -256,4 +256,37 @@ export class Tree {
       );
     }
   }
+
+  /**
+   * Gets the depth of the node containing the given value.
+   * Depth is defined as the number of edges in the path from that node to the root node.
+   * @param {number} value - the value to find in the tree
+   * @returns {number|null} depth of the node, or null if value is not found in the tree
+   */
+  depth(value) {
+    return this.#depthHelp(this.#root, value);
+  }
+
+  /**
+   * Helper for depth(). Gets the number of edges from the root node to
+   * the node containing the given value.
+   * @param {Node} root - current root of the tree
+   * @param {*} value - the value to find in the tree
+   * @returns {number|null} depth of the node, or null if value is not found in the tree
+   */
+  #depthHelp(root, value) {
+    if (!root) return null;
+
+    if (value < root.data) {
+      const leftResult = this.#depthHelp(root.left, value);
+      if (leftResult === null) return null;
+      return 1 + leftResult;
+    } else if (value > root.data) {
+      const rightResult = this.#depthHelp(root.right, value);
+      if (rightResult === null) return null;
+      return 1 + rightResult;
+    } else {
+      return 0;
+    }
+  }
 }
