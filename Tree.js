@@ -197,4 +197,36 @@ export class Tree {
       return root;
     }
   }
+
+  /**
+   * @callback NodeCallback
+   * @param {Node} node - the current node being processed
+   * @returns {void}
+   */
+
+  /**
+   * Traverses the tree in breadth-first level order.
+   * Calls the callback on each node as it traverses, passing the whole node as an argument.
+   * @param {NodeCallback} callback - function to execute on each node
+   * @returns {void}
+   * @throws {TypeError} throws error if no callback function is provided
+   */
+  levelOrderForEach(callback) {
+    if (typeof callback !== "function") {
+      throw new TypeError("No callback function is provided!");
+    }
+
+    if (this.#isEmpty()) return;
+
+    const queue = [];
+    queue.push(this.#root);
+
+    while (queue.length > 0) {
+      const node = queue.shift();
+      callback(node);
+
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+  }
 }
