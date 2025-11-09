@@ -16,7 +16,7 @@ export class Tree {
     const uniqueArray = [...new Set(array)];
     const sortedUniqueArray = uniqueArray.sort((a, b) => a - b);
 
-    this.#root = this.buildTree(sortedUniqueArray);
+    this.#root = this.#buildTree(sortedUniqueArray);
   }
 
   /**
@@ -24,7 +24,7 @@ export class Tree {
    * @param {number[]} array - the sorted array of numbers
    * @returns {Node|null} level-0 root node of the balanced BST
    */
-  buildTree(array) {
+  #buildTree(array) {
     return this.#buildTreeHelp(array, 0, array.length - 1);
   }
 
@@ -44,5 +44,37 @@ export class Tree {
     root.left = this.#buildTreeHelp(array, start, mid - 1);
     root.right = this.#buildTreeHelp(array, mid + 1, end);
     return root;
+  }
+
+  /**
+   * Visualizes this binary tree.
+   * @returns {void}
+   */
+  prettyPrint() {
+    this.#prettyPrintHelp(this.#root);
+  }
+
+  /**
+   * Helper for prettyPrint. Provided by The Odin Project for testing purposes.
+   */
+  #prettyPrintHelp(node, prefix = "", isLeft = true) {
+    if (node === null) {
+      return;
+    }
+    if (node.right !== null) {
+      this.#prettyPrintHelp(
+        node.right,
+        `${prefix}${isLeft ? "│   " : "    "}`,
+        false
+      );
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.left !== null) {
+      this.#prettyPrintHelp(
+        node.left,
+        `${prefix}${isLeft ? "    " : "│   "}`,
+        true
+      );
+    }
   }
 }
