@@ -170,4 +170,31 @@ export class Tree {
     }
     return curr;
   }
+
+  /**
+   * Gets the node with the given value in the BST
+   * @param {number} value - value to find
+   * @returns {Node|null} node with matching value, or null if not found
+   */
+  find(value) {
+    return this.#findHelp(this.#root, value);
+  }
+
+  /**
+   * Helper for find(). Gets the node the given value in the BST
+   * @param {Node} root - the current root of the subtree
+   * @param {number} value - the value to find
+   * @returns {Node|null} node with matching value, or null if not found
+   */
+  #findHelp(root, value) {
+    if (root === null) return null;
+
+    if (value < root.data) {
+      return this.#findHelp(root.left, value);
+    } else if (value > root.data) {
+      return this.#findHelp(root.right, value);
+    } else {
+      return root;
+    }
+  }
 }
