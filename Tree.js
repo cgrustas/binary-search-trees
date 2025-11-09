@@ -229,4 +229,31 @@ export class Tree {
       if (node.right) queue.push(node.right);
     }
   }
+
+  /**
+   * Gets the height of the node containing the given value.
+   * Height is defined as the number of edges in the longest path from that node to a leaf node.
+   * @param {number} value - the value to find in the tree
+   * @returns {number|null} height, or null if value is not found in the tree
+   */
+  height(value) {
+    const node = this.find(value);
+    if (!node) return null;
+
+    return this.#heightHelp(node);
+  }
+
+  /**
+   * Helper for height(). Calculates the height of a subtree rooted at the given node.
+   * @param {Node} root - node to find the longest path for
+   * @returns {number} height of the subtree, or -1 if root is null
+   */
+  #heightHelp(root) {
+    if (root === null) return -1;
+    else {
+      return (
+        1 + Math.max(this.#heightHelp(root.left), this.#heightHelp(root.right))
+      );
+    }
+  }
 }
