@@ -231,6 +231,105 @@ export class Tree {
   }
 
   /**
+   * Traverses the tree in depth-first in-order <left><root><right>
+   * Calls the callback on each node as it traverses, passing the whole node as an argument.
+   * @param {NodeCallback} callback - function to execute on each node
+   * @returns {void}
+   * @throws {TypeError} throws error if no callback function is provided
+   */
+  inOrderForEach(callback) {
+    if (typeof callback !== "function") {
+      throw new TypeError("No callback function is provided!");
+    }
+
+    if (this.#isEmpty()) return;
+
+    this.#inOrderForEachHelp(this.#root, callback);
+  }
+
+  /**
+   * Traverses the tree in depth-first in-order <left><root><right>
+   * Calls the callback on each node as it traverses, passing the whole node as an argument.
+   * @param {Node} root - current root of the tree
+   * @param {NodeCallback} callback - function to execute on each node
+   * @returns {void}
+   * @throws {TypeError} throws error if no callback function is provided
+   */
+  #inOrderForEachHelp(root, callback) {
+    if (root === null) return;
+
+    this.#inOrderForEachHelp(root.left, callback);
+    callback(root);
+    this.#inOrderForEachHelp(root.right, callback);
+  }
+
+  /**
+   * Traverses the tree in depth-first pre-order <root><left><right>
+   * Calls the callback on each node as it traverses, passing the whole node as an argument.
+   * @param {NodeCallback} callback - function to execute on each node
+   * @returns {void}
+   * @throws {TypeError} throws error if no callback function is provided
+   */
+  preOrderForEach(callback) {
+    if (typeof callback !== "function") {
+      throw new TypeError("No callback function is provided!");
+    }
+
+    if (this.#isEmpty()) return;
+
+    this.#preOrderForEachHelp(this.#root, callback);
+  }
+
+  /**
+   * Traverses the tree in depth-first pre-order <root><left><right>
+   * Calls the callback on each node as it traverses, passing the whole node as an argument.
+   * @param {Node} root - current root of the tree
+   * @param {NodeCallback} callback - function to execute on each node
+   * @returns {void}
+   * @throws {TypeError} throws error if no callback function is provided
+   */
+  #preOrderForEachHelp(root, callback) {
+    if (root === null) return;
+
+    callback(root);
+    this.#preOrderForEachHelp(root.left, callback);
+    this.#preOrderForEachHelp(root.right, callback);
+  }
+
+  /**
+   * Traverses the tree in depth-first post-order <left><right><root>
+   * Calls the callback on each node as it traverses, passing the whole node as an argument.
+   * @param {NodeCallback} callback - function to execute on each node
+   * @returns {void}
+   * @throws {TypeError} throws error if no callback function is provided
+   */
+  postOrderForEach(callback) {
+    if (typeof callback !== "function") {
+      throw new TypeError("No callback function is provided!");
+    }
+
+    if (this.#isEmpty()) return;
+
+    this.#postOrderForEachHelp(this.#root, callback);
+  }
+
+  /**
+   * Traverses the tree in depth-first post-order <left><right><root>
+   * Calls the callback on each node as it traverses, passing the whole node as an argument.
+   * @param {Node} root - current root of the tree
+   * @param {NodeCallback} callback - function to execute on each node
+   * @returns {void}
+   * @throws {TypeError} throws error if no callback function is provided
+   */
+  #postOrderForEachHelp(root, callback) {
+    if (root === null) return;
+
+    this.#postOrderForEachHelp(root.left, callback);
+    this.#postOrderForEachHelp(root.right, callback);
+    callback(root);
+  }
+
+  /**
    * Gets the height of the node containing the given value.
    * Height is defined as the number of edges in the longest path from that node to a leaf node.
    * @param {number} value - the value to find in the tree
