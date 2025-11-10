@@ -330,6 +330,17 @@ export class Tree {
   }
 
   /**
+   * Takes a traversal function, and gets the nodes in the order they are visited.
+   * @param {Function} forEach - traversal function
+   * @returns {number[]} array of nodes in the order they are visited
+   */
+  getTraversalOrder(forEach) {
+    const array = [];
+    forEach((node) => array.push(node.data));
+    return array;
+  }
+
+  /**
    * Gets the height of the node containing the given value.
    * Height is defined as the number of edges in the longest path from that node to a leaf node.
    * @param {number} value - the value to find in the tree
@@ -427,7 +438,7 @@ export class Tree {
    */
   rebalance() {
     const array = [];
-    this.levelOrderForEach((node) => array.push(node.data));
+    this.inOrderForEach((node) => array.push(node.data));
     this.#root = this.#buildTree(array);
   }
 }
