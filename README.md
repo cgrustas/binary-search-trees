@@ -1,7 +1,5 @@
 # Binary Search Trees
 
-# Binary Search Trees
-
 A JavaScript implementation of a self-balancing binary search tree (BST) data structure with comprehensive operations and traversal algorithms. Built as part of [The Odin Project](https://www.theodinproject.com/).
 
 ## Description
